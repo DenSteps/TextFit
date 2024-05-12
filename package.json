@@ -1,0 +1,20 @@
+{
+    "name": "my-project",
+    "version": "1.0.0",
+    "description": "My project description",
+    "main": "index.js",
+    "nodemonConfig": {
+        "watch": ["*.js", "*.mjs", "*.cjs", "*.json", "*.css", "*.html"],
+        "delay": "1000",
+        "ext": "js,mjs,cjs,json,css,html"
+      },
+    "scripts": {
+      "start": "nodemon coitus.js"
+    },
+    "author": "Your Name",
+    "license": "MIT",
+    "dependencies": {
+      "nodemon": "^2.0.15"
+    }
+  }
+  

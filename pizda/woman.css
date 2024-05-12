@@ -1,0 +1,168 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    /* position: absolute; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* padding: 40px; */
+    box-sizing: border-box;
+    justify-self: center;
+}
+
+textarea {
+    width: 98%;
+    /* min-height: 420px; */
+    /* position: absolute; */
+    /* height: 100%; */
+    margin-left: 15px;
+    margin-bottom: 20px;
+    /* padding: 10px; */
+    font-size: 16px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #356b25;
+    /* box-sizing: border-box; */
+    
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+
+    
+}
+button {
+    box-shadow: 3px 3px 1px 1px rgba(6, 128, 87, 0.42);
+}
+button:hover {
+    transform: rotate3d(1, 1, 1, 1deg);
+    box-shadow: 4px 4px 1px 1px rgba(6, 128, 87, 0.6);
+}
+button:active {
+    transform: rotate3d(2, 1, 2, -3deg);
+    box-shadow: 2px 2px 4px 4px rgba(6, 128, 87, 0.9);
+}
+
+@keyframes rotateButton {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+button:active {
+    animation: rotateButton 1s linear infinite; /* Применяем анимацию к кнопке при наведении */
+}
+
+@keyframes rotateAndScale {
+    0% {
+        transform: rotateX(-45deg) rotateY(0deg) scale(0.4, 4.20); /* Начальное положение: вращение по оси Y на 0 градусов и масштаб 1 */
+        color: gold;
+        font-size: larger;
+        background-color: #356b25;
+    }
+    50% {
+        transform: rotateX(45deg) rotateY(180deg) scale(0.69, 42); /* В середине анимации: вращение по оси Y на 180 градусов и масштаб 0.69 */
+        color: pink;
+        font-size: larger;
+        background-color: darkgoldenrod;
+    }
+    100% {
+        transform: rotateX(0deg) rotateY(360deg) scale(0.4, 1); /* Конечное положение: вращение по оси Y на 360 градусов и масштаб 1 */
+        color: white;
+        font-size: larger;
+        background-color: darkblue;
+    }
+}
+
+#randomBtn:hover {
+    animation: rotateAndScale 3s cubic-bezier(0.1, -0.6, 0.2, 0) infinite, rotateAndScale 2s cubic-bezier(0.5, -0.6, 0.2, 0) infinite;
+    /* , rotateAndScale 2s cubic-bezier(0.1, -0.6, 0.2, 0) infinite; /* Добавляем 3D вращение и масштабирование к анимации при наведении на кнопку с id randomBtn */
+}
+
+
+.columns {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-around;
+    width: 100%;
+    padding: 10px;
+    white-space: pre-wrap;
+}
+
+.chord {
+    margin-right: 0.2em; /* Добавляем отступ между аккордами */
+    font-size: 125%;
+}
+
+  /* #region IFRAME */
+    
+   .columns {
+    position: static;
+    /* pointer-events: none; */
+    /* width: 100%;
+    height: 100%;
+    top: 0; */
+  }
+
+  .columns > * {
+    z-index: 2;
+  }
+  
+  .columns iframe {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    opacity: 0.42;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .columns a {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 120%;
+  }
+  
+/*   
+  .columns .chord:nth-child(3) {
+    top: 30px;
+    left: 10px;
+    color: rgb(44, 160, 44);
+  }
+  
+  .columns .chord:nth-child(4) {
+    top: 30px;
+    left: 50px;
+    color: rgb(140, 86, 75);
+  }
+  
+  .columns .chord:nth-child(5) {
+    top: 70px;
+    left: 10px;
+    color: rgb(255, 127, 14);
+  }
+  
+  .columns .chord:nth-child(7) {
+    top: 110px;
+    left: 10px;
+    color: rgb(214, 39, 40);
+  } */
+  
+  /* #endregion */
