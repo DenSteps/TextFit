@@ -1,8 +1,7 @@
-let columnsNum = 3;
+const columnsNum = 3;
 
-// При загрузке страницы проверяем, есть ли тексты в локальном хранилище и отображаем их
 window.onload = function () {
-    let savedTexts = null // localStorage.getItem('savedTexts');
+    let savedTexts = localStorage.getItem('savedTexts');
     if (savedTexts == null) {
         savedTexts = JSON.stringify(SAVED_HARDCODE_HARDMETAL_TEXTS)
         localStorage.setItem('savedTexts', savedTexts);
@@ -14,7 +13,6 @@ window.onload = function () {
         if (savedTextsDiv != null && savedTextParsed.hasOwnProperty(key)) {
             const savedText = savedTextParsed[key];
             savedTextsDiv.innerHTML += `<button onclick="displaySavedText('${key}')">${key}</button>`;
-            console.log(`%c${savedText}`, 'color:gray;');
         }
     }
 
@@ -23,7 +21,6 @@ window.onload = function () {
         if (text !== '' && window.DELETE_BUTTON_MODE) {
             toogleBtnMode(false);
         }
-        // console.log(text);
     }
     ));
 
@@ -49,27 +46,20 @@ function mainBtnClick() {
 }
 
 let lastRandomBtnIndex = null;
-// let wasRandomBtnClick = false;
-
 function randomBtnClick() {
     wasRandomBtnClick = true;
-    // Получаем все кнопки
     const buttons = document.querySelectorAll('#savedTexts button');
     
-    // Если кнопок нет, выходим из функции
     if (buttons.length === 0) return;
 
     let randomIndex = lastRandomBtnIndex;
-    // Генерируем случайный индекс кнопки
     while (randomIndex == lastRandomBtnIndex) {
         randomIndex = Math.floor(Math.random() * buttons.length);
     }
     lastRandomBtnIndex = randomIndex
 
-    // Выбираем случайную кнопку по индексу
     const randomButton = buttons[randomIndex];
 
-    // Создаем и запускаем событие клика на случайной кнопке
     const clickEvent = new MouseEvent('click', {
         bubbles: true,
         noNeedToSave: true,
@@ -78,8 +68,6 @@ function randomBtnClick() {
     });
     randomButton.dispatchEvent(clickEvent);
 }
-
-
 
 function splitTextIntoColumns(lines) {
     const columns = [];
@@ -93,8 +81,6 @@ function splitTextIntoColumns(lines) {
             if (isChord(word)) {
                 columnText += createChordSpan(word) + ' ';
             } else {
-                // Обрезаем каждое слово до 100 символов
-                // const truncatedWord = word.slice(0, 100);
                 columnText += word + ' ';
             }
         });
@@ -109,7 +95,6 @@ function splitTextIntoColumns(lines) {
 
     return columns.map(columnLines => columnLines.join('\n'));
 }
-
 
 function displayColumnsInOutput(columns) {
     const outputDiv = document.getElementById('output');
@@ -126,7 +111,6 @@ function displayColumnsInOutput(columns) {
 
 function saveText() {
     const inputText = document.getElementById('inputText').value;
-    // Используем первую строку текста в качестве ключа
     const firstLine = inputText.split('\n')[0];
     const savedTexts = JSON.parse(localStorage.getItem('savedTexts')) || {};
     savedTexts[firstLine] = inputText;
@@ -146,25 +130,17 @@ function splitText() {
 
     displayColumnsInOutput(columns);
 
-    // Скрываем поле ввода и кнопки
     document.getElementById('inputText').style.display = 'none';
     document.getElementById('splitBtn').style.display = 'none';
     document.getElementById('randomBtn').style.display = 'none';
     document.getElementById('savedTexts').style.display = 'none';
 
     document.querySelector('.columns').addEventListener('wheel', function(event) {
-        // Получаем направление прокрутки
         const delta = Math.sign(event.deltaY);
-        
-        // Увеличиваем или уменьшаем размер шрифта в зависимости от направления
         adjustFontSizeByMouseWheel(delta);
-        // adjustColumnsNumByMouseWheel(delta);
-        
-        // Отменяем действие по умолчанию, чтобы страница не прокручивалась
         event.preventDefault();
     });
 
-    // Показываем кнопки сохраненных текстов
     const savedTextsDiv = document.getElementById('savedTexts');
     savedTextsDiv.innerHTML = '';
     const savedTexts = JSON.parse(localStorage.getItem('savedTexts')) || {};
@@ -196,42 +172,18 @@ function displaySavedText(key, ev) {
 }
 
 function adjustFontSizeByMouseWheel(delta) {
-    // Получаем текущий размер шрифта
     let fontSize = parseFloat(document.querySelector('.columns').style.fontSize) || 16;
-
-    // Определяем размер шага изменения размера шрифта
     const step = 2;
-
-    // Изменяем размер шрифта в зависимости от направления прокрутки
     if (delta > 0) {
-        // Прокрутка вниз: уменьшаем размер шрифта
         fontSize -= step;
     } else {
-        // Прокрутка вверх: увеличиваем размер шрифта
         fontSize += step;
     }
-
-    // Устанавливаем новый размер шрифта
     document.querySelector('.columns').style.fontSize = fontSize + 'px';
-}
-
-function adjustColumnsNumByMouseWheel(delta) {
-    const step = 1;
-    if (delta > 0) {
-        // Прокрутка вниз: уменьшаем кол-во колонок
-        if (columnsNum >= 2)
-            columnsNum -= step;
-    } else {
-        // Прокрутка вверх: увеличиваем кол-во колонок
-        if (columnsNum <= 6)
-            columnsNum += step;
-    }
-    displaySavedText(lastKeyOfDisplaySavedText);
 }
 
 function adjustFontSize() {
     const columns = document.querySelector('.columns');
-    const container = document.querySelector('.container');
     const windowHeight = window.outerHeight;
     const marginY = 50;
     const height = windowHeight - marginY;
@@ -244,27 +196,14 @@ function adjustFontSize() {
 
     const textSize = height / (rowNum / columnsNum * 2) //* 1.4  //* (columnsNum * 0.5);
 
-    // textSize += rowNum / 50
-
-    // Determine the smallest dimension of the window
-    // const minDimension = Math.min(windowWidth, windowHeight);
-
-    // Calculate the ratio of the smallest dimension to the container's corresponding dimension
-    // const ratio = minDimension / (minDimension === windowWidth ? containerWidth : containerHeight);
-
-    // Adjust font size based on the ratio
     const minFontSize = 1; // Minimum font size
     const maxFontSize = 124; // Maximum font size
-    let fontSize = textSize; //ratio * (parseFloat(columns.style.fontSize) || 10);
+    let fontSize = textSize;
 
-    // Ensure font size is within the specified range
     fontSize = Math.min(maxFontSize, Math.max(minFontSize, fontSize));
 
     columns.style.fontSize = fontSize.toFixed(2) + 'px';
 }
 
-// Call adjustFontSize whenever the window is resized
 window.addEventListener('resize', adjustFontSize);
-
-// Call adjustFontSize once the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', adjustFontSize);
