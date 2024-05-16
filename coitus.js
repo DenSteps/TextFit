@@ -21,6 +21,8 @@ const writeFileSync = (filePath, content) => {
 };
 
 // Чтение содержимого файлов JavaScript и CSS
+const chordsUtils = readFileSync('./pizda/chui.js');
+const mainConst = readFileSync('./pizda/mainda.js');
 const mp3Const = readFileSync('./pizda/stringsong.ts');
 const lyricsConst = readFileSync('./pizda/awesome.ts');
 const jsContent = readFileSync('./pizda/with.js');
@@ -30,7 +32,7 @@ const cssContent = readFileSync('./pizda/woman.css');
 let htmlContent = readFileSync('./pizda/sex.html');
 
 // Вставка содержимого JavaScript и CSS в HTML
-htmlContent = htmlContent.replace('</head>', `<script>${mp3Const}</script><script>${lyricsConst}</script><script>${jsContent}</script></head>`);
+htmlContent = htmlContent.replace('</head>', `<script>${chordsUtils}</script><script>${mp3Const}</script><script>${lyricsConst}</script><script>${mainConst}</script><script>${jsContent}</script></head>`);
 htmlContent = htmlContent.replace('</body>', `<style>${cssContent}</style></body>`);
 
 // Запись итогового HTML файла
